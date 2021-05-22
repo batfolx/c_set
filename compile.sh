@@ -1,2 +1,1 @@
-gcc -o tree tree.c
-./tree
+gcc -o tree tree.c set.c

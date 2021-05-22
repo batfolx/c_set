@@ -1,4 +1,6 @@
 #include "tree.h"
+#include "set.h"
+#include <stdlib.h>
 
 int8_t tree_contains(node_t *root, uint16_t key) {
 
@@ -44,21 +46,48 @@ void print_root(node_t* root) {
 }
 
 
-
+// compare function, compares two elements
+int compare (const void * num1, const void * num2) {
+    return (*(int64_t *)num1 > *(int64_t *)num2) ? 1 : -1;
+}
 
 int main() {
-    node_t root;
-    root.port = 0;
+    /*node_t root;
+    root.port = 5000;
     root.left = NULL;
     root.right = NULL;
+    clock_t time = clock();
+    for (int i = 0 ; i < 65535; i++) tree_add(&root, i);
+    time = clock() - time;
 
-    tree_add(&root, 2);
-    tree_add(&root, 120);
-    tree_add(&root, 290);
-    tree_add(&root, 1000);
-    tree_add(&root, 200);
-    tree_add(&root, 6);
-    tree_add(&root, 200);
-    print_root(&root);
+    printf("This run took %f seconds\n", (double)time / CLOCKS_PER_SEC); */
+    SimpleSet set;
+    set_init(&set);
+
+    char buff[20];
+    printf("Adding to set...\n");
+    for (uint64_t i = 0; i < 2550000; i++) {
+        snprintf(buff, 20, "%ld", i);
+        set_add(&set, buff);
+    }
+    printf("Finished adding to set\n");
+
+    uint64_t size;
+    char ** elements = set_to_array(&set, &size);
+    int64_t * numbers = (int64_t *) malloc(size * sizeof(int64_t));
+
+    printf("Adding elements to memory\n");
+    for (int i = 0; i < size; i++) {
+        int64_t number = (int64_t) strtol(elements[i], NULL, 10);
+        numbers[i] = number;
+        free(elements[i]);
+    }
+
+    printf("Sorting numbers\n");
+    qsort(numbers, size, sizeof(int64_t), compare);
+    for (int64_t i = 0; i < size; i++) printf("Element in numbers %ld\n", numbers[i]);
+
+
+    set_destroy(&set);
 
 }
