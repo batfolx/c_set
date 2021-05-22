@@ -123,3 +123,23 @@ int64_t * hashset_to_array(hashset_t * set, uint64_t * sz, bool sort) {
     *sz = size;
     return numbers;
 }
+
+/**
+ * Frees the sets memory.
+ * @param set The set's memory to be freed
+ */
+void hashset_free(hashset_t * set) {
+    if ( !set ) return;
+    if ( !set->init ) return;
+
+    // iterate over how many 'buckets' the set has
+    // and check to make sure the list is not NULL
+    // if it is, continue through loop else free the
+    // memory
+    for (int64_t i = 0; i < HASHSET_SIZE; i++) {
+        if ( set->entries[i].list == NULL ) continue;
+        free(set->entries[i].list);
+    }
+
+    set->init = false;
+}
