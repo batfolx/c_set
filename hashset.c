@@ -5,7 +5,7 @@
  * @param set The set to be initialized
  * @return true if the set could be initialized, false otherwise
  */
-bool hashset_init(hashset_t *set) {
+bool hashset_init_default(hashset_t *set) {
 
     set->entries = ( hashentry_t * ) malloc(HASHSET_SIZE * sizeof(hashentry_t));
     if ( !set->entries ) {
@@ -20,6 +20,32 @@ bool hashset_init(hashset_t *set) {
     return true;
 }
 
+
+/**
+ * Initializes the hashset map with parameters
+ * @param set The set to be initialized
+ * @param hashset_size The size of the hash set
+ * @param hashset_entry_size The initial size of each entry in the hash set
+ * @return true if the set could be initialized, false otherwise
+ */
+bool hashset_init(hashset_t *set, uint64_t hashset_size, uint64_t hashset_entry_size) {
+
+    set->entries = ( hashentry_t * ) malloc(hashset_size * sizeof(hashentry_t));
+    if ( !set->entries ) {
+        set->init = false;
+        return false;
+    }
+    for (int64_t i = 0; i < hashset_size; i++) {
+        set->entries[i].list = NULL;
+        set->entries[i].index = 0;
+        set->entries[i].total_sz = hashset_entry_size;
+    }
+    set->init = true;
+    set->hashset_size = hashset_size;
+    set->hashset_entry_size = hashset_entry_size;
+    return true;
+}
+
 /**
  * Adds an entry to the hash set
  * @param set The set to be added
@@ -30,13 +56,13 @@ bool hashset_add(hashset_t *set, int64_t key) {
     if ( !set ) return false;
     if ( !set->init ) return false;
 
-    int64_t mod_key = key % HASHSET_SIZE;
+    int64_t mod_key = key % set->hashset_size;
 
     // no entry found here. add to set
     if ( set->entries[mod_key].list == NULL ) {
-        set->entries[mod_key].list = ( int64_t * ) malloc(HASHSET_ENTRY_DEFAULT_SZ * sizeof(int64_t));
+        set->entries[mod_key].list = ( int64_t * ) malloc(set->hashset_entry_size * sizeof(int64_t));
         set->entries[mod_key].index = 0;
-        set->entries[mod_key].total_sz = HASHSET_ENTRY_DEFAULT_SZ;
+        set->entries[mod_key].total_sz = set->hashset_entry_size;
         set->entries[mod_key].list[set->entries[mod_key].index++] = key;
         return true;
     }
@@ -75,7 +101,7 @@ bool hashset_size(hashset_t * set, uint64_t * size) {
     if ( !size ) return false;
     if ( !set->init ) return false;
     *size = 0;
-    for (int64_t i = 0; i < HASHSET_SIZE; i++) {
+    for (int64_t i = 0; i < set->hashset_size; i++) {
         *size += set->entries[i].index;
     }
     return true;
@@ -110,7 +136,7 @@ int64_t * hashset_to_array(hashset_t * set, uint64_t * sz, bool sort) {
     }
 
     uint64_t counter = 0;
-    for (int64_t i = 0; i < HASHSET_SIZE; i++) {
+    for (int64_t i = 0; i < set->hashset_size; i++) {
         for (int64_t j = 0; j < set->entries[i].index; j++) {
             numbers[counter++] = set->entries[i].list[j];
         }
@@ -133,7 +159,7 @@ void hashset_free(hashset_t * set) {
     // and check to make sure the list is not NULL
     // if it is, continue through loop else free the
     // memory
-    for (int64_t i = 0; i < HASHSET_SIZE; i++) {
+    for (int64_t i = 0; i < set->hashset_size; i++) {
         if ( set->entries[i].list == NULL ) continue;
         free(set->entries[i].list);
     }

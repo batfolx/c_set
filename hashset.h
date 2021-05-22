@@ -14,13 +14,16 @@ typedef struct hashentry_t {
 
 typedef struct hashset_t {
     bool init;
+    uint64_t hashset_size;
+    uint64_t hashset_entry_size;
     hashentry_t * entries;
 } hashset_t;
 
 
 
 
-bool hashset_init(hashset_t *) ;
+bool hashset_init(hashset_t *, uint64_t, uint64_t) ;
+bool hashset_init_default(hashset_t *) ;
 bool hashset_add(hashset_t *, int64_t key) ;
 bool hashset_size(hashset_t *, uint64_t *) ;
 void hashset_free(hashset_t *);

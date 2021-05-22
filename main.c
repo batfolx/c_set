@@ -1,13 +1,13 @@
 #include "hashset.h"
 int main() {
     hashset_t set;
-    if ( !hashset_init(&set) ) {
+    if ( !hashset_init(&set, 1024, 2048) ) {
         printf("Could not init set\n");
         exit(-1);
     }
 
 
-    for (int64_t i = 0; i <= 1000000; i++) hashset_add(&set, i);
+    for (int64_t i = 0; i <= 5000; i++) hashset_add(&set, i);
     // transform set to array
     // you may pass `true` or `false` to the `hashset_to_array`
     // function to sort the resulting array
