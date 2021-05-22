@@ -17,6 +17,8 @@ bool hashset_init_default(hashset_t *set) {
         set->entries[i].index = 0;
     }
     set->init = true;
+    set->hashset_size = HASHSET_SIZE;
+    set->hashset_entry_size = HASHSET_ENTRY_DEFAULT_SZ;
     return true;
 }
 
@@ -38,7 +40,6 @@ bool hashset_init(hashset_t *set, uint64_t hashset_size, uint64_t hashset_entry_
     for (int64_t i = 0; i < hashset_size; i++) {
         set->entries[i].list = NULL;
         set->entries[i].index = 0;
-        set->entries[i].total_sz = hashset_entry_size;
     }
     set->init = true;
     set->hashset_size = hashset_size;
