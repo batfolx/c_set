@@ -6,10 +6,8 @@ int main() {
         exit(-1);
     }
 
-    int64_t entries = 5000000;
-    // add however many entries you want
-    for (int i = 0; i < entries; i++) hashset_add(&set, i);
 
+    for (int64_t i = 0; i <= 1000000; i++) hashset_add(&set, i);
     // transform set to array
     // you may pass `true` or `false` to the `hashset_to_array`
     // function to sort the resulting array

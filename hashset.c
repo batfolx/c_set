@@ -31,7 +31,6 @@ bool hashset_add(hashset_t *set, int64_t key) {
     if ( !set->init ) return false;
 
     int64_t mod_key = key % HASHSET_SIZE;
-    //printf("Key %ld maps to %ld\n", key, mod_key);
 
     // no entry found here. add to set
     if ( set->entries[mod_key].list == NULL ) {
@@ -45,14 +44,12 @@ bool hashset_add(hashset_t *set, int64_t key) {
     // do anything
     for (int64_t i = 0; i < set->entries[mod_key].index; i++) {
         if ( set->entries[mod_key].list[i] == key ) {
-            printf("Key %ld already exists in set\n", key);
             return true;
         }
     }
 
     // store number in memory
     set->entries[mod_key].list[set->entries[mod_key].index++] = key;
-    //printf("Stored key %ld\n", key);
 
     // if too many elements need to be stored, dynamically resize memory
     if ( set->entries[mod_key].index >= set->entries[mod_key].total_sz ) {
