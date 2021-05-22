@@ -47,10 +47,7 @@ void print_root(node_t* root) {
 }
 
 
-// compare function, compares two elements
-int compare (const void * num1, const void * num2) {
-    return (*(int64_t *)num1 > *(int64_t *)num2) ? 1 : -1;
-}
+
 
 int main() {
     /*node_t root;

@@ -12,7 +12,10 @@ bool hashset_init(hashset_t *set) {
         set->init = false;
         return false;
     }
-    for (int64_t i = 0; i < HASHSET_SIZE; i++) set->entries[i].list = NULL;
+    for (int64_t i = 0; i < HASHSET_SIZE; i++) {
+        set->entries[i].list = NULL;
+        set->entries[i].index = 0;
+    }
     set->init = true;
     return true;
 }
@@ -60,4 +63,61 @@ bool hashset_add(hashset_t *set, int64_t key) {
     return true;
 }
 
+/**
+ * Retrieves the hashsets size. Checks to make sure
+ * the set is initialized properly and if it has proper
+ * memory
+ * @param set The set to calculate the size
+ * @param size A pointer to the size
+ * @return true if could calculate size, false otherwise
+ */
+bool hashset_size(hashset_t * set, uint64_t * size) {
+    if ( !set ) return false;
+    if ( !size ) return false;
+    if ( !set->init ) return false;
+    *size = 0;
+    for (int64_t i = 0; i < HASHSET_SIZE; i++) {
+        *size += set->entries[i].index;
+    }
+    return true;
 
+
+}
+
+
+// compare function, compares two elements
+static int compare (const void * num1, const void * num2) {
+    return (*(int64_t *)num1 > *(int64_t *)num2) ? 1 : -1;
+}
+
+/**
+ * Gets a pointer an array of 8 byte integers
+ * @param set The set to retrieve the array from
+ * @param sort whether or not to sort the array
+ * @return a int64_t* array (which called must free after done)
+ * or NULL if something went wrong
+ */
+int64_t * hashset_to_array(hashset_t * set, bool sort) {
+
+    uint64_t size = 0;
+    if ( !hashset_size(set, &size) ) {
+        printf("Something went wrong with hashset_size\n");
+        return NULL;
+    }
+    int64_t *numbers = (int64_t *) malloc(size * sizeof(int64_t));
+    if ( !numbers ) {
+        printf("hashset_to_array: malloc failed\n");
+        return NULL;
+    }
+
+    uint64_t counter = 0;
+    for (int64_t i = 0; i < HASHSET_SIZE; i++) {
+        for (int64_t j = 0; j < set->entries[i].index; j++) {
+            numbers[counter++] = set->entries[i].list[j];
+        }
+    }
+
+    if ( sort ) qsort(numbers, size, sizeof(int64_t), compare);
+
+    return numbers;
+}
