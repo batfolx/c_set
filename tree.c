@@ -98,6 +98,10 @@ int main() {
         return -1;
     }
 
+
+
+    for (int i = 0; i < 65535; i++) hashset_add(&set, i);
+
     printf("Successfully initialized set\n");
 
 }
