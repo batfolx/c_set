@@ -1,5 +1,6 @@
 #include "tree.h"
 #include "set.h"
+#include "hashset.h"
 #include <stdlib.h>
 
 int8_t tree_contains(node_t *root, uint16_t key) {
@@ -60,7 +61,7 @@ int main() {
     for (int i = 0 ; i < 65535; i++) tree_add(&root, i);
     time = clock() - time;
 
-    printf("This run took %f seconds\n", (double)time / CLOCKS_PER_SEC); */
+    printf("This run took %f seconds\n", (double)time / CLOCKS_PER_SEC);
     SimpleSet set;
     set_init(&set);
 
@@ -88,6 +89,15 @@ int main() {
     for (int64_t i = 0; i < size; i++) printf("Element in numbers %ld\n", numbers[i]);
 
 
-    set_destroy(&set);
+    set_destroy(&set);*/
+
+    hashset_t set;
+
+    if ( !hashset_init(&set) ) {
+        printf("Could not init set\n");
+        return -1;
+    }
+
+    printf("Successfully initialized set\n");
 
 }
