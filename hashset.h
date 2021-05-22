@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define HASHSET_SIZE 256
+#define HASHSET_SIZE 2048
 #define HASHSET_ENTRY_DEFAULT_SZ 128
 
 typedef struct hashentry_t {
@@ -24,6 +24,6 @@ bool hashset_init(hashset_t *) ;
 bool hashset_add(hashset_t *, int64_t key) ;
 static int compare (const void * num1, const void * num2);
 bool hashset_size(hashset_t *, uint64_t *) ;
-int64_t * hashset_to_array(hashset_t *, bool) ;
+int64_t * hashset_to_array(hashset_t *, uint64_t*, bool) ;
 
 

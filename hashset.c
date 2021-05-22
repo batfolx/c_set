@@ -31,7 +31,7 @@ bool hashset_add(hashset_t *set, int64_t key) {
     if ( !set->init ) return false;
 
     int64_t mod_key = key % HASHSET_SIZE;
-    printf("Key %ld maps to %ld\n", key, mod_key);
+    //printf("Key %ld maps to %ld\n", key, mod_key);
 
     // no entry found here. add to set
     if ( set->entries[mod_key].list == NULL ) {
@@ -39,7 +39,6 @@ bool hashset_add(hashset_t *set, int64_t key) {
         set->entries[mod_key].index = 0;
         set->entries[mod_key].total_sz = HASHSET_ENTRY_DEFAULT_SZ;
         set->entries[mod_key].list[set->entries[mod_key].index++] = key;
-        printf("Allocated memory successfully with index %ld\n", set->entries[mod_key].index);
         return true;
     }
     // check to make sure set does not contain same item, if it does return true and don't
@@ -53,10 +52,13 @@ bool hashset_add(hashset_t *set, int64_t key) {
 
     // store number in memory
     set->entries[mod_key].list[set->entries[mod_key].index++] = key;
+    //printf("Stored key %ld\n", key);
 
     // if too many elements need to be stored, dynamically resize memory
     if ( set->entries[mod_key].index >= set->entries[mod_key].total_sz ) {
-        set->entries[mod_key].list = (int64_t *) realloc(set->entries[mod_key].list, (set->entries[mod_key].total_sz * 2) * sizeof(int64_t));
+        int64_t curr_size = set->entries[mod_key].total_sz;
+        printf("Reallocating memory for key %ld with current size %ld to new size %ld\n", key, curr_size, curr_size * 2);
+        set->entries[mod_key].list = (int64_t *) realloc(set->entries[mod_key].list, (curr_size * 2) * sizeof(int64_t));
         set->entries[mod_key].total_sz *= 2;
     }
 
@@ -97,7 +99,7 @@ static int compare (const void * num1, const void * num2) {
  * @return a int64_t* array (which called must free after done)
  * or NULL if something went wrong
  */
-int64_t * hashset_to_array(hashset_t * set, bool sort) {
+int64_t * hashset_to_array(hashset_t * set, uint64_t * sz, bool sort) {
 
     uint64_t size = 0;
     if ( !hashset_size(set, &size) ) {
@@ -118,6 +120,6 @@ int64_t * hashset_to_array(hashset_t * set, bool sort) {
     }
 
     if ( sort ) qsort(numbers, size, sizeof(int64_t), compare);
-
+    *sz = size;
     return numbers;
 }

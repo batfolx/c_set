@@ -1,1 +1,1 @@
-gcc -o tree tree.c set.c hashset.c
+gcc -o main main.c hashset.c
