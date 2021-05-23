@@ -33,6 +33,9 @@ bool hashset_init_default(hashset_t *set) {
  */
 bool hashset_init(hashset_t *set, uint64_t hashset_size, uint64_t hashset_entry_size) {
 
+    if ( hashset_size == 0 ) hashset_size = 1;
+    if ( hashset_entry_size == 0 ) hashset_entry_size = 1;
+
     set->entries = ( hashentry_t * ) malloc(hashset_size * sizeof(hashentry_t));
     if ( !set->entries ) {
         set->init = false;
@@ -126,6 +129,10 @@ static int compare (const void * num1, const void * num2) {
  */
 int64_t * hashset_to_array(hashset_t * set, uint64_t * sz, bool sort) {
 
+    if ( !set ) return NULL;
+    if ( !set->init ) return NULL;
+    if ( !sz ) return NULL;
+
     uint64_t size = 0;
     if ( !hashset_size(set, &size) ) {
         printf("Something went wrong with hashset_size\n");
@@ -160,8 +167,11 @@ void hashset_free(hashset_t * set) {
     // iterate over how many 'buckets' the set has
     // and free valid memory
     for (int64_t i = 0; i < set->hashset_size; i++)
-        if ( set->entries[i].list != NULL )
+        if ( set->entries[i].list != NULL ) {
             free(set->entries[i].list);
+            set->entries[i].index = 0;
+            set->entries[i].total_sz = 0;
+        }
 
     set->init = false;
 }
