@@ -26,6 +26,7 @@ bool hashset_init(hashset_t *, uint64_t, uint64_t) ;
 bool hashset_init_default(hashset_t *) ;
 bool hashset_add(hashset_t *, int64_t key) ;
 bool hashset_size(hashset_t *, uint64_t *) ;
+bool hashset_contains(hashset_t *, int64_t key) ;
 void hashset_free(hashset_t *);
 int64_t * hashset_to_array(hashset_t *, uint64_t*, bool) ;
 

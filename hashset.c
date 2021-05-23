@@ -156,6 +156,20 @@ int64_t * hashset_to_array(hashset_t * set, uint64_t * sz, bool sort) {
     return numbers;
 }
 
+
+bool hashset_contains(hashset_t * set, int64_t key) {
+    if ( !set ) return false;
+    if ( !set->init ) return false;
+
+    int64_t mod_key = key %  set->hashset_size;
+
+    for (int64_t i = 0; i < set->entries[mod_key].index; i++)
+        if ( set->entries[mod_key].list[i] == key ) return true;
+
+    return false;
+
+}
+
 /**
  * Frees the sets memory.
  * @param set The set's memory to be freed

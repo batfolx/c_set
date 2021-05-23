@@ -13,17 +13,11 @@ int main() {
     /* add elements to array */
     for (int64_t i = 0; i <= 65535; i++) hashset_add(&set, i);
 
-    /* transform set to array, passing true to sort or false to not sort */
-    bool sort_set = true;
-    uint64_t size = 0;
-    int64_t * array = hashset_to_array(&set, &size, sort_set);
-    if ( !array ) {
-        printf("Could not transform hashset to array.\n");
-        exit(-1);
-    }
+    if ( hashset_contains(&set, 65535) ) printf("Set contains 65535\n");
+    else printf("Set does not contain 65535\n");
 
-    /* do stuff with each number */
-    for (int64_t i = 0; i < size; i++) printf("Element in set %ld\n", array[i]);
+    if (hashset_contains(&set, 100000) ) printf("Set contains 100000\n");
+    else printf("Set does not contain 100000\n");
 
     /* When you are done, free the set. */
     hashset_free(&set);

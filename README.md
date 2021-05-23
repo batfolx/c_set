@@ -105,9 +105,6 @@ int main() {
     </p>
     <ul>
         <li>
-            If the set contains an element. (coming soon!)
-        </li>
-        <li>
             Remove an element from the set. (also coming soon!)
         </li>    
     </ul>
