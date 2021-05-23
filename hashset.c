@@ -66,6 +66,7 @@ bool hashset_add(hashset_t *set, int64_t key) {
     // no entry found here. add to set
     if ( set->entries[mod_key].list == NULL ) {
         set->entries[mod_key].list = ( int64_t * ) malloc(set->hashset_entry_size * sizeof(int64_t));
+        if ( !set->entries[mod_key].list ) return false;
         set->entries[mod_key].index = 0;
         set->entries[mod_key].total_sz = set->hashset_entry_size;
         set->entries[mod_key].list[set->entries[mod_key].index++] = key;
@@ -85,8 +86,8 @@ bool hashset_add(hashset_t *set, int64_t key) {
     // if too many elements need to be stored, dynamically resize memory
     if ( set->entries[mod_key].index >= set->entries[mod_key].total_sz ) {
         int64_t curr_size = set->entries[mod_key].total_sz;
-        //printf("Reallocating memory for key %ld with current size %ld to new size %ld\n", key, curr_size, curr_size * 2);
         set->entries[mod_key].list = (int64_t *) realloc(set->entries[mod_key].list, (curr_size * 2) * sizeof(int64_t));
+        if ( !set->entries[mod_key].list ) return false;
         set->entries[mod_key].total_sz *= 2;
     }
 
@@ -111,7 +112,6 @@ bool hashset_size(hashset_t * set, uint64_t * size) {
     }
     return true;
 }
-
 
 // compare function, compares two elements
 static int compare (const void * num1, const void * num2) {

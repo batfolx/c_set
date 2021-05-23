@@ -110,4 +110,207 @@ int main() {
     </ul>
 </div>
 
+<p style="font-size: 32px">
+    Diagnostics and performance
+</p>
+<p>
+    Below I have ran some small tests to see time performance with
+    different parameters. I did this on a system that has the following
+    hardware
+</p>
+<ul>
+    <li>
+        32GB DDR4 3200MHz RAM
+    </li>
+    <li>
+        Intel core i9-9900K
+    </li>
+    <li>
+        512GB SSD
+    </li>
+</ul>
 
+
+<p>
+    Below is a big text dump of the tests I ran. Interestingly enough,
+    keeping the hashset bucket initial size smaller resulted in a better
+    performance (with a larger input) than if it had started with a large initial
+    size. I suppose it is because it is more space efficient, as a larger
+    initial size may not be used up ever but it is quite expensive to allocate
+    a large block of memory as opposed to a small block.
+</p>
+
+
+```
+=== STARTING PARAMETERS ===
+HASHSET TABLE SIZE: 512
+HASHSET ELEMENTS INITIAL SIZE: 256
+Iterating each test 10 times
+It took, on average, 0.000003 seconds to add 10 elements
+It took, on average, 0.000016 seconds to add 100 elements
+It took, on average, 0.000152 seconds to add 1000 elements
+It took, on average, 0.000432 seconds to add 10000 elements
+It took, on average, 0.017279 seconds to add 100000 elements
+It took, on average, 1.469125 seconds to add 1000000 elements
+It took, on average, 175.148662 seconds to add 10000000 elements
+```
+
+
+```
+=== STARTING PARAMETERS ===
+HASHSET TABLE SIZE: 1024
+HASHSET ELEMENTS INITIAL SIZE: 256
+Iterating each test 10 times
+It took, on average, 0.000004 seconds to add 10 elements
+It took, on average, 0.000019 seconds to add 100 elements
+It took, on average, 0.000323 seconds to add 1000 elements
+It took, on average, 0.000541 seconds to add 10000 elements
+It took, on average, 0.010183 seconds to add 100000 elements
+It took, on average, 0.771720 seconds to add 1000000 elements
+It took, on average, 94.457552 seconds to add 10000000 elements
+```
+
+```
+=== STARTING PARAMETERS ===
+HASHSET TABLE SIZE: 1024
+HASHSET ELEMENTS INITIAL SIZE: 512
+Iterating each test 10 times
+It took, on average, 0.000005 seconds to add 10 elements
+It took, on average, 0.000047 seconds to add 100 elements
+It took, on average, 0.000688 seconds to add 1000 elements
+It took, on average, 0.000935 seconds to add 10000 elements
+It took, on average, 0.010699 seconds to add 100000 elements
+It took, on average, 0.807601 seconds to add 1000000 elements
+It took, on average, 94.653862 seconds to add 10000000 elements
+```
+
+
+```
+=== STARTING PARAMETERS ===
+HASHSET TABLE SIZE: 1024
+HASHSET ELEMENTS INITIAL SIZE: 1024
+Iterating each test 10 times
+It took, on average, 0.000003 seconds to add 10 elements
+It took, on average, 0.000057 seconds to add 100 elements
+It took, on average, 0.000640 seconds to add 1000 elements
+It took, on average, 0.000867 seconds to add 10000 elements
+It took, on average, 0.010960 seconds to add 100000 elements
+It took, on average, 0.840234 seconds to add 1000000 elements
+It took, on average, 94.717185 seconds to add 10000000 elements
+```
+
+
+```
+=== STARTING PARAMETERS ===
+HASHSET TABLE SIZE: 2048
+HASHSET ELEMENTS INITIAL SIZE: 2048
+Iterating each test 10 times
+It took, on average, 0.000006 seconds to add 10 elements
+It took, on average, 0.000063 seconds to add 100 elements
+It took, on average, 0.000652 seconds to add 1000 elements
+It took, on average, 0.001618 seconds to add 10000 elements
+It took, on average, 0.007994 seconds to add 100000 elements
+It took, on average, 0.489360 seconds to add 1000000 elements
+It took, on average, 48.990473 seconds to add 10000000 elements
+```
+
+```
+=== STARTING PARAMETERS ===
+HASHSET TABLE SIZE: 2048
+HASHSET ELEMENTS INITIAL SIZE: 1
+Iterating each test 10 times
+It took, on average, 0.000001 seconds to add 10 elements
+It took, on average, 0.000005 seconds to add 100 elements
+It took, on average, 0.000041 seconds to add 1000 elements
+It took, on average, 0.000331 seconds to add 10000 elements
+It took, on average, 0.005798 seconds to add 100000 elements
+It took, on average, 0.465864 seconds to add 1000000 elements
+It took, on average, 46.575807 seconds to add 10000000 elements
+```
+
+
+
+```
+=== STARTING PARAMETERS ===
+HASHSET TABLE SIZE: 65535
+HASHSET ELEMENTS INITIAL SIZE: 2048
+Iterating each test 10 times
+It took, on average, 0.000005 seconds to add 10 elements
+It took, on average, 0.000079 seconds to add 100 elements
+It took, on average, 0.000733 seconds to add 1000 elements
+It took, on average, 0.007960 seconds to add 10000 elements
+It took, on average, 0.055972 seconds to add 100000 elements
+It took, on average, 0.166300 seconds to add 1000000 elements
+It took, on average, 3.193279 seconds to add 10000000 elements
+```
+
+```
+=== STARTING PARAMETERS ===
+HASHSET TABLE SIZE: 131072
+HASHSET ELEMENTS INITIAL SIZE: 2048
+Iterating each test 10 times
+It took, on average, 0.000005 seconds to add 10 elements
+It took, on average, 0.000076 seconds to add 100 elements
+It took, on average, 0.000788 seconds to add 1000 elements
+It took, on average, 0.008025 seconds to add 10000 elements
+It took, on average, 0.081300 seconds to add 100000 elements
+It took, on average, 0.197650 seconds to add 1000000 elements
+It took, on average, 2.251245 seconds to add 10000000 elements
+```
+
+```
+=== STARTING PARAMETERS ===
+HASHSET TABLE SIZE: 262144
+HASHSET ELEMENTS INITIAL SIZE: 1
+Iterating each test 10 times
+It took, on average, 0.000002 seconds to add 10 elements
+It took, on average, 0.000003 seconds to add 100 elements
+It took, on average, 0.000025 seconds to add 1000 elements
+It took, on average, 0.000234 seconds to add 10000 elements
+It took, on average, 0.002342 seconds to add 100000 elements
+It took, on average, 0.037554 seconds to add 1000000 elements
+It took, on average, 0.680473 seconds to add 10000000 elements
+```
+
+
+```
+=== STARTING PARAMETERS ===
+HASHSET TABLE SIZE: 8388608
+HASHSET ELEMENTS INITIAL SIZE: 1
+Iterating each test 10 times
+It took, on average, 0.000003 seconds to add 10 elements
+It took, on average, 0.000005 seconds to add 100 elements
+It took, on average, 0.000028 seconds to add 1000 elements
+It took, on average, 0.000250 seconds to add 10000 elements
+It took, on average, 0.002425 seconds to add 100000 elements
+It took, on average, 0.023860 seconds to add 1000000 elements
+It took, on average, 0.271357 seconds to add 10000000 elements
+```
+
+```
+=== STARTING PARAMETERS ===
+HASHSET TABLE SIZE: 8388608
+HASHSET ELEMENTS INITIAL SIZE: 32
+Iterating each test 10 times
+It took, on average, 0.000003 seconds to add 10 elements
+It took, on average, 0.000009 seconds to add 100 elements
+It took, on average, 0.000075 seconds to add 1000 elements
+It took, on average, 0.000735 seconds to add 10000 elements
+It took, on average, 0.007264 seconds to add 100000 elements
+It took, on average, 0.072452 seconds to add 1000000 elements
+It took, on average, 0.676848 seconds to add 10000000 elements
+```
+
+```
+=== STARTING PARAMETERS ===
+HASHSET TABLE SIZE: 8388608
+HASHSET ELEMENTS INITIAL SIZE: 16
+Iterating each test 10 times
+It took, on average, 0.000003 seconds to add 10 elements
+It took, on average, 0.000008 seconds to add 100 elements
+It took, on average, 0.000063 seconds to add 1000 elements
+It took, on average, 0.000500 seconds to add 10000 elements
+It took, on average, 0.004881 seconds to add 100000 elements
+It took, on average, 0.048106 seconds to add 1000000 elements
+It took, on average, 0.460943 seconds to add 10000000 elements
+```

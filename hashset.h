@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 #define HASHSET_SIZE 256
-#define HASHSET_ENTRY_DEFAULT_SZ 128
+#define HASHSET_ENTRY_DEFAULT_SZ 16
 
 typedef struct hashentry_t {
     int64_t *list;
