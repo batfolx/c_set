@@ -1,6 +1,6 @@
-<div style="font-size: 34px">
+<p style="font-size: 34px">
     c_set - a very lightweight set data structure for storing 8 byte integers
-</div>
+</p>
 
 <div>
     <p>
