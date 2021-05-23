@@ -1,7 +1,8 @@
 #include "hashset.h"
 
 /**
- * Initializes the hashset map
+ * Initializes the hashset map to default parameter
+ * (HASHSET_SIZE and HASHSET_ENTRY_DEFAULT_SZ as defined in `hashset.h`)
  * @param set The set to be initialized
  * @return true if the set could be initialized, false otherwise
  */
@@ -26,8 +27,8 @@ bool hashset_init_default(hashset_t *set) {
 /**
  * Initializes the hashset map with parameters
  * @param set The set to be initialized
- * @param hashset_size The size of the hash set
- * @param hashset_entry_size The initial size of each entry in the hash set
+ * @param hashset_size The size of the hash set (number of `buckets`)
+ * @param hashset_entry_size The initial size of each entry(bucket) in the hash set
  * @return true if the set could be initialized, false otherwise
  */
 bool hashset_init(hashset_t *set, uint64_t hashset_size, uint64_t hashset_entry_size) {
@@ -81,7 +82,7 @@ bool hashset_add(hashset_t *set, int64_t key) {
     // if too many elements need to be stored, dynamically resize memory
     if ( set->entries[mod_key].index >= set->entries[mod_key].total_sz ) {
         int64_t curr_size = set->entries[mod_key].total_sz;
-        printf("Reallocating memory for key %ld with current size %ld to new size %ld\n", key, curr_size, curr_size * 2);
+        //printf("Reallocating memory for key %ld with current size %ld to new size %ld\n", key, curr_size, curr_size * 2);
         set->entries[mod_key].list = (int64_t *) realloc(set->entries[mod_key].list, (curr_size * 2) * sizeof(int64_t));
         set->entries[mod_key].total_sz *= 2;
     }
@@ -106,8 +107,6 @@ bool hashset_size(hashset_t * set, uint64_t * size) {
         *size += set->entries[i].index;
     }
     return true;
-
-
 }
 
 
@@ -119,6 +118,8 @@ static int compare (const void * num1, const void * num2) {
 /**
  * Gets a pointer an array of 8 byte integers
  * @param set The set to retrieve the array from
+ * @param sz A pointer that will be populated with the size of the
+ * returned pointer
  * @param sort whether or not to sort the array
  * @return a int64_t* array (which called must free after done)
  * or NULL if something went wrong
@@ -157,13 +158,10 @@ void hashset_free(hashset_t * set) {
     if ( !set->init ) return;
 
     // iterate over how many 'buckets' the set has
-    // and check to make sure the list is not NULL
-    // if it is, continue through loop else free the
-    // memory
-    for (int64_t i = 0; i < set->hashset_size; i++) {
-        if ( set->entries[i].list == NULL ) continue;
-        free(set->entries[i].list);
-    }
+    // and free valid memory
+    for (int64_t i = 0; i < set->hashset_size; i++)
+        if ( set->entries[i].list != NULL )
+            free(set->entries[i].list);
 
     set->init = false;
 }
