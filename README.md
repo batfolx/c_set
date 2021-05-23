@@ -61,12 +61,6 @@ int main() {
         relatively well with those numbers. Of course you may increase it to your needs.
     </p>
     <p>
-        The total initial memory allocated when called to ``hashset_init`` will be ``hashset_table_sz`` * ``hashset_elements_initial_sz``
-        so keep that in mind as well. So if you had ``hashset_elements_initial_sz`` set to 1, and ``hashset_table_sz`` set to
-        512, you will only use 512 bytes initially. Not bad! Of course, the more elements you add, the more memory
-        will be allocated.
-    </p>
-    <p>
         Example below        
     </p>
 </div>
