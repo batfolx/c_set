@@ -49,7 +49,22 @@ int main() {
 <div>
     <p>
         If you'd like to have a little more control over the set(that is, giving it and its elements size yourself), 
-        you can do that as well with the ``hashset_init`` function.
+        you can do that as well with the ``hashset_init`` function. Keep in mind that increasing the value ``hashset_elements_initial_sz``
+        variable reduces the amount of ``malloc`` calls, but also allocates more initial memory, so keep it low
+        if you don't want to hog your system's memory.
+    </p>
+    <p>
+        The variable ``hashset_table_sz`` is the amount of buckets that are held within the
+        hash table; that is it holds that many pointers the hashset's entries. So within the
+        code example below, 512 pointers to memory locations that will store items of the set.
+        I recommend keeping this value to 256, 512, or 1024 as I have found that it performs
+        relatively well with those numbers. Of course you may increase it to your needs.
+    </p>
+    <p>
+        The total initial memory allocated when called to ``hashset_init`` will be ``hashset_table_sz`` * ``hashset_elements_initial_sz``
+        so keep that in mind as well. So if you had ``hashset_elements_initial_sz`` set to 1, and ``hashset_table_sz`` set to
+        512, you will only use 512 bytes initially. Not bad! Of course, the more elements you add, the more memory
+        will be allocated.
     </p>
     <p>
         Example below        
