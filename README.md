@@ -1,11 +1,19 @@
-##c_set - a very lightweight set data structure for storing 8 byte integers
+<div style="font-size: 34px">
+    c_set - a very lightweight set data structure for storing 8 byte integers
+</div>
 
-You can clone the repository and drop the ``hashset.c`` and ``hashset.h`` files in your project and include
-them in order to use them.
-
-This set currently works with integers but can be converted to other data types with some work.
-
-##Code example
+<div>
+    <p>
+        You can clone the repository and drop the ``hashset.c`` and ``hashset.h`` files in your project and include
+        them in order to use them.
+    </p>
+    <p>
+        This set currently works with integers but can be converted to other data types with some work.
+    </p>
+    <p style="font-size: 30px">
+        Code Examples
+    </p>
+</div>
 
 ```
 #include "hashset.h"
@@ -38,11 +46,16 @@ int main() {
     return 0;
 }
 ```
+<div>
+    <p>
+        If you'd like to have a little more control over the set(that is, giving it and its elements size yourself), 
+        you can do that as well with the ``hashset_init`` function.
+    </p>
+    <p>
+        Example below        
+    </p>
+</div>
 
-If you'd like to have a little more control over the set(that is, giving it and its elements size yourself), 
-you can do that as well with the ``hashset_init`` function.
-
-Example below
 ```
 #include "hashset.h"
 
@@ -77,9 +90,18 @@ int main() {
 }
 ```
 
+<div>
+    <p style="font-size: 30px">
+        Things that have not been implemented yet
+    </p>
+    <ul>
+        <li>
+            If the set contains an element. (coming soon!)
+        </li>
+        <li>
+            Remove an element from the set. (also coming soon!)
+        </li>    
+    </ul>
+</div>
 
-##Things that have not been implemented
 
---If the set contains an element. (coming soon!)
-
---Remove an element from the set. (also coming soon!)
