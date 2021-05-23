@@ -38,7 +38,7 @@ int main() {
 
     int times = 10;
     uint64_t hashset_table_sz = 1024;
-    uint64_t hashset_elements_initial_sz = 1;
+    uint64_t hashset_elements_initial_sz = 64;
     uint64_t num_elements = 10;
 
     printf("=== STARTING PARAMETERS ===\n");
