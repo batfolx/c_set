@@ -2,8 +2,10 @@
 
 int main() {
     hashset_t set;
-
-    if ( !hashset_init_default(&set) ) {
+    /* create a set with your own memory requirements */
+    uint64_t hashset_table_sz = 512;
+    uint64_t hashset_elements_initial_sz = 128;
+    if ( !hashset_init(&set, hashset_table_sz, hashset_elements_initial_sz) ) {
         printf("Could not init set\n");
         exit(-1);
     }
@@ -26,5 +28,4 @@ int main() {
     /* When you are done, free the set. */
     hashset_free(&set);
     return 0;
-
 }
